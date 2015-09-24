@@ -15,6 +15,7 @@ use Pimple\ServiceProviderInterface;
 use Raven_Client;
 use RuntimeException;
 use Monolog\Handler\RavenHandler;
+use Psr\Log\LoggerInterface;
 
 /**
  * Sentry integration for Silex.
@@ -38,7 +39,7 @@ class SentryServiceProvider implements ServiceProviderInterface
             return new Raven_Client($app['sentry.options']['dsn']);
         };
 
-        $app['monolog'] = $app->extend('monolog', function($monolog, $app) {
+        $app['monolog'] = $app->extend('monolog', function(LoggerInterface $monolog, $app) {
             $monolog->pushHandler(new RavenHandler($app['sentry']));
 
             return $monolog;
