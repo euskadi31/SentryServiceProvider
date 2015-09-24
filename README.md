@@ -24,7 +24,7 @@ $app = new Silex\Application;
 
 $app->register(new \Euskadi31\Silex\Provider\SentryServiceProvider(), [
     'sentry.options' => [
-        'dsn' => 'https://user:pass@'
+        'dsn' => 'https://user:pass@app.getsentry.com/46448'
     ]
 ]);
 ```

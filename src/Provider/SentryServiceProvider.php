@@ -28,10 +28,7 @@ class SentryServiceProvider implements ServiceProviderInterface
      */
     public function register(Container $app)
     {
-        $app['sentry.options'] = [
-            'dsn'           => null,
-            'monolog'       => true
-        ];
+        $app['sentry.options'] = [];
 
         $app['sentry'] = function($app) {
             if (!isset($app['sentry.options']['dsn']) || empty($app['sentry.options']['dsn'])) {
@@ -41,12 +38,10 @@ class SentryServiceProvider implements ServiceProviderInterface
             return new Raven_Client($app['sentry.options']['dsn']);
         };
 
-        if (isset($app['sentry.options']['monolog']) && $app['sentry.options']['monolog']) {
-            $app['monolog'] = $app->extend('monolog', function($monolog, $app) {
-                $monolog->pushHandler(new RavenHandler($app['sentry']));
+        $app['monolog'] = $app->extend('monolog', function($monolog, $app) {
+            $monolog->pushHandler(new RavenHandler($app['sentry']));
 
-                return $monolog;
-            });
-        }
+            return $monolog;
+        });
     }
 }

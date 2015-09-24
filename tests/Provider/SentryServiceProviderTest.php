@@ -29,17 +29,15 @@ class SentryServiceProviderTest extends \PHPUnit_Framework_TestCase
             return $monologMock;
         };
 
-        $app->register(new SentryServiceProvider);
-
-        $app['sentry.options'] = [
-            'dsn' => 'https://foo:bar@app.getsentry.com/46448',
-            'monolog' => true
-        ];
+        $app->register(new SentryServiceProvider(), [
+            'sentry.options' => [
+                'dsn' => 'https://foo:bar@app.getsentry.com/46448'
+            ]
+        ]);
 
         $this->assertTrue(isset($app['sentry.options']));
         $this->assertEquals([
-            'dsn' => 'https://foo:bar@app.getsentry.com/46448',
-            'monolog' => true
+            'dsn' => 'https://foo:bar@app.getsentry.com/46448'
         ], $app['sentry.options']);
 
         $this->assertInstanceOf('Raven_Client', $app['sentry']);
