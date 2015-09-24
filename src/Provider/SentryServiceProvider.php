@@ -48,7 +48,14 @@ class SentryServiceProvider implements ServiceProviderInterface
                 throw new RuntimeException('sentry dsn is empty.');
             }
 
-            return new Raven_Client($app['sentry.options']['dsn']);
+            return new Raven_Client(
+                $app['sentry.options']['dsn'],
+                [
+                    'tags' => [
+                        'php_version' => phpversion(),
+                    ]
+                ]
+            );
         };
 
         $app['monolog'] = $app->extend('monolog', function(LoggerInterface $monolog, $app) use ($levels) {
