@@ -31,13 +31,15 @@ class SentryServiceProviderTest extends \PHPUnit_Framework_TestCase
 
         $app->register(new SentryServiceProvider(), [
             'sentry.options' => [
-                'dsn' => 'https://foo:bar@app.getsentry.com/46448'
+                'dsn' => 'https://foo:bar@app.getsentry.com/46448',
+                'level' => 'notice'
             ]
         ]);
 
         $this->assertTrue(isset($app['sentry.options']));
         $this->assertEquals([
-            'dsn' => 'https://foo:bar@app.getsentry.com/46448'
+            'dsn' => 'https://foo:bar@app.getsentry.com/46448',
+            'level' => 'notice'
         ], $app['sentry.options']);
 
         $this->assertInstanceOf('Raven_Client', $app['sentry']);
