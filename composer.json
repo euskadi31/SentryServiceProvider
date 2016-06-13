@@ -4,7 +4,7 @@
     "type": "library",
     "require": {
         "silex/silex": "~2.0@dev",
-        "raven/raven": "~0.13.0",
+        "sentry/sentry": "~0.21.0",
         "monolog/monolog": "^1.4.1"
     },
     "require-dev": {
